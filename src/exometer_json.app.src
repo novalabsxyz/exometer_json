@@ -1,0 +1,12 @@
+%% -*- erlang-indent-level: 4; indent-tabs-mode: nil -*-
+{application, exometer_json,
+ [
+  {description, "JSON reporter for exometer"},
+  {vsn, git},
+  {registered, []},
+  {application, [kernel, stdlib,
+                 lager, jiffy, hackney,
+                 exometer_core]},
+  {included_applications, []},
+  {env, []}
+ ]}.
