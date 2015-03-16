@@ -4,7 +4,7 @@
   {description, "JSON reporter for exometer"},
   {vsn, git},
   {registered, []},
-  {application, [kernel, stdlib,
+  {applications, [kernel, stdlib,
                  lager, jiffy, hackney,
                  exometer_core]},
   {included_applications, []},
