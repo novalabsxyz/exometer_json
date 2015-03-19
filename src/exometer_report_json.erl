@@ -93,7 +93,7 @@ exometer_report(Metric, DataPoint, _Extra, Value, State) ->
       ]
      },
 
-    Payload = jiffy:encode(Data),
+    Payload = jsx:encode(Data),
 
     case send_to_sink(Payload, State) of
         {ok, State} ->
