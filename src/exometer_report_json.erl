@@ -64,7 +64,7 @@
 
 -spec exometer_init(options()) -> {ok, state()}.
 exometer_init(Opts) ->
-    ?info("Exometer JSON Reporter; Opts: ~p~n", [Opts]),
+    ?debug("Exometer JSON Reporter; Opts: ~p~n", [Opts]),
     SinkUrl = get_opt(json_sink_url, Opts, ?DEFAULT_SINK_URL),
     HttpRequestType = get_and_validate_request_type(Opts),
     HostName = check_hostname(get_opt(hostname, Opts, "auto")),
@@ -106,7 +106,7 @@ exometer_report(Metric, DataPoint, _Extra, Value, State) ->
 send_to_sink(Payload, State) ->
     #state{sink_url=SinkUrl,
            request_type=RequestType} = State,
-    Headers = [],
+    Headers = [{<<"content-type">>, <<"application/json">>}],
     Options = [],
     case hackney:RequestType(SinkUrl, Headers, Payload, Options) of
         {ok, StatusCode, _RespHeaders, _ClientRef} ->
