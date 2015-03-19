@@ -77,19 +77,17 @@ exometer_init(Opts) ->
                       value(),
                       state()) -> {ok, state()} | {error, term()}.
 exometer_report(Metric, DataPoint, _Extra, Value, State) ->
-    Data = {
-      [
-       {<<"type">>, <<"exometer_metric">>},
-       {<<"body">>, {[
-                      {<<"name">>, name(Metric)},
-                      {<<"value">>, Value},
-                      {<<"timestamp">>, unix_time()},
-                      {<<"host">>, iolist_to_binary(State#state.hostname)},
-                      {<<"instance">>, DataPoint}
-                     ]}
-       }
-      ]
-     },
+    Data = [
+            {<<"type">>, <<"exometer_metric">>},
+            {<<"body">>, {[
+                           {<<"name">>, name(Metric)},
+                           {<<"value">>, Value},
+                           {<<"timestamp">>, unix_time()},
+                           {<<"host">>, iolist_to_binary(State#state.hostname)},
+                           {<<"instance">>, DataPoint}
+                          ]}
+            }
+           ],
 
     Payload = jsx:encode(Data),
 
