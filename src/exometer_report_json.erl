@@ -42,7 +42,6 @@
     exometer_terminate/2
    ]).
 
--include_lib("exometer_core/include/exometer.hrl").
 -include("log.hrl").
 
 -define(DEFAULT_SINK_URL, <<"http://localhost:8000">>).
@@ -64,7 +63,6 @@
 
 -spec exometer_init(options()) -> {ok, state()}.
 exometer_init(Opts) ->
-    ?debug("Exometer JSON Reporter; Opts: ~p~n", [Opts]),
     SinkUrl = get_opt(json_sink_url, Opts, ?DEFAULT_SINK_URL),
     HttpRequestType = get_and_validate_request_type(Opts),
     HostName = check_hostname(get_opt(hostname, Opts, "auto")),
