@@ -63,6 +63,7 @@
 
 -spec exometer_init(options()) -> {ok, state()}.
 exometer_init(Opts) ->
+    ?debug("Exometer JSON Reporter; Opts: ~p~n", [Opts]),
     SinkUrl = get_opt(json_sink_url, Opts, ?DEFAULT_SINK_URL),
     HttpRequestType = get_and_validate_request_type(Opts),
     HostName = check_hostname(get_opt(hostname, Opts, "auto")),
@@ -101,7 +102,7 @@ send_to_sink(Payload, State) ->
     Options = [],
     case hackney:RequestType(SinkUrl, Headers, Payload, Options) of
         {ok, StatusCode, _RespHeaders, _ClientRef} ->
-            ?info("Sink return status code: ~b", [StatusCode]),
+            ?debug("Sink returned status code: ~b", [StatusCode]),
             {ok, State};
         {error, Reason}=Error ->
             ?error("Sink returned error: ~p", [Reason]),
