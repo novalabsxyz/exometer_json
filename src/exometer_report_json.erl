@@ -101,8 +101,9 @@ send_to_sink(Payload, State) ->
     Headers = [{<<"content-type">>, <<"application/json">>}],
     Options = [],
     case hackney:RequestType(SinkUrl, Headers, Payload, Options) of
-        {ok, StatusCode, _RespHeaders, _ClientRef} ->
+        {ok, StatusCode, _RespHeaders, ClientRef} ->
             ?debug("Sink returned status code: ~b", [StatusCode]),
+            _ = hackney:skip_body(ClientRef),
             {ok, State};
         {error, Reason}=Error ->
             ?error("Sink returned error: ~p", [Reason]),
